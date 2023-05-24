@@ -1,5 +1,5 @@
-###Create a record store database loosely based on real records I've made. 
-###To see my music, see: https://www.youtube.com/watch?v=v8sSfj---oQ&list=OLAK5uy_l5G7yJJfWKmgMfLAAhVyBYuGajpyiWIjE
+##Create a record store database loosely based on real records I've made. 
+##To see my music, see: https://www.youtube.com/watch?v=v8sSfj---oQ&list=OLAK5uy_l5G7yJJfWKmgMfLAAhVyBYuGajpyiWIjE
 
 CREATE TABLE EdsRecordStore (id INTEGER PRIMARY KEY, albumName TEXT, rating INTEGER, priceInDollars INTEGER, 
 albumQuantity INTEGER);
