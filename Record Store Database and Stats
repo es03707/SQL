@@ -1,0 +1,37 @@
+--Create a record store database loosely based on real records I've made. 
+--To see my music, see: https://www.youtube.com/watch?v=v8sSfj---oQ&list=OLAK5uy_l5G7yJJfWKmgMfLAAhVyBYuGajpyiWIjE
+
+CREATE TABLE EdsRecordStore (id INTEGER PRIMARY KEY, albumName TEXT, rating INTEGER, priceInDollars INTEGER, 
+albumQuantity INTEGER);
+
+INSERT INTO EdsRecordStore VALUES
+(1, "Peachfuzz Radio", 7, 5, 43),
+(2, "Peachfuzz Type Beats", 5, 1, 54),
+(3, "Beats to Rap to", 8, 10, 23),
+(4, "Beats 2 Rap 2", 9, 10, 34),
+(5, "Peachfuzzville", 8, 15, 65),
+(6, "Peachfuzz Saves the Day", 10, 25, 12),
+(7, "Peachfuzz: Origins", 4, 25, 87),
+(8, "Peachfuzz Slow Beats", 3, 5, 45),
+(9, "Peachfuzz Party Beatz", 9, 19, 45),
+(10, "Peachfuzz Summer", 10, 45, 98),
+(11, "Peachfuzz: The Number One DJ", 10, 16, 23),
+(12, "Peachfuzz Forever", 6, 13, 87),
+(13, "Peachfuzz Radio 2", 1, 12, 45),
+(14, "Peachfuzz in the Future: YEAR 3000", 10, 15, 87),
+(15, "Peachfuzz Forever and Ever", 9, 20, 67);
+
+--display the database ordered by price. 
+SELECT * FROM EdsRecordStore 
+ORDER BY priceInDollars desc;
+
+--what is the average price of a record that isn't bad? So only use records that are at least a 5/10 in rating.
+SELECT AVG(priceInDollars) "average album price (only used albums with at least a 5/10 rating)"
+FROM EdsRecordStore
+where rating >=5; 
+
+--what are the 5 best albums? 
+SELECT albumName, priceInDollars, rating
+FROM EdsRecordStore
+order by rating desc
+limit 5; 
