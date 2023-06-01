@@ -456,8 +456,6 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 SELECT * FROM pokemon;
 
 --Let's see the average stats for each type of Pokemon (so Dragon type, Water type, Psychic type, and so on):
-SELECT * FROM pokemon;
-
 SELECT Type_1 AS Pokemon_Type, 
 
 ROUND(AVG(Total)) AS Total, 
