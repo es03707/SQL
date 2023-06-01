@@ -469,3 +469,9 @@ ROUND(AVG(Speed)) AS Speed
 FROM pokemon 
 GROUP BY Type_1
 ORDER BY Total DESC;
+
+--Let's see the strongest Pokemon based on total stats:
+SELECT MAX(TOTAL), Name FROM pokemon;
+
+--Now let's see the weakest Pokemon based on total stats:
+SELECT MIN(TOTAL), Name FROM pokemon;
