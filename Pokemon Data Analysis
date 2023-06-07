@@ -172,7 +172,7 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (151,'Mew','Psychic',NULL,600,100,100,100,100,100,100,1,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (152,'Chikorita','Grass',NULL,318,45,49,65,49,65,45,2,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (153,'Bayleef','Grass',NULL,405,60,62,80,63,80,60,2,'False');
-INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (154,'nium','Grass',NULL,525,80,82,100,83,100,80,2,'False');
+INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (154,'Meganium','Grass',NULL,525,80,82,100,83,100,80,2,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (155,'Cyndaquil','Fire',NULL,309,39,52,43,60,50,65,2,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (156,'Quilava','Fire',NULL,405,58,64,58,80,65,80,2,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (157,'Typhlosion','Fire',NULL,534,78,84,78,109,85,100,2,'False');
@@ -412,6 +412,19 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 --Let's see all the Pokemon with this SQL query first:
 SELECT * FROM pokemon;
 
+--Let's see the strongest Pokemon based on total stats:
+SELECT MAX(TOTAL), Name FROM pokemon;
+
+--Now let's see the weakest Pokemon based on total stats:
+SELECT MIN(TOTAL), Name FROM pokemon;
+
+--What are the average TOTAL stats of each pokemon type? Order the list by strongest to weakest type.
+SELECT Type_1 AS Pokemon_Type,  
+ROUND(AVG(Total)) AS AVG_Total_Stats
+FROM pokemon
+GROUP BY Type_1
+ORDER BY AVG_Total_Stats DESC;
+
 --Let's see the average stats for each type of Pokemon (so Dragon type, Water type, Psychic type, and so on):
 SELECT Type_1 AS Pokemon_Type, 
 
@@ -427,8 +440,82 @@ FROM pokemon
 GROUP BY Type_1
 ORDER BY Total DESC;
 
---Let's see the strongest Pokemon based on total stats:
-SELECT MAX(TOTAL), Name FROM pokemon;
+--Let's see the strongest and fastest pokemon types.
 
---Now let's see the weakest Pokemon based on total stats:
-SELECT MIN(TOTAL), Name FROM pokemon;
+SELECT Type_1 AS Pokemon_Type, 
+
+ROUND(AVG(Total)) AS Total, 
+ROUND(AVG(HP)) AS HP, 
+ROUND(AVG(Attack)) AS ATK, 
+ROUND(AVG(Defense)) AS DEF, 
+ROUND(AVG(Sp_Atk)) AS SP_ATK, 
+ROUND(AVG(Sp_Def)) AS SP_DEF, 
+ROUND(AVG(Speed)) AS Speed 
+
+FROM pokemon 
+GROUP BY Type_1
+HAVING AVG(Speed) > 70
+ORDER BY Total DESC;
+
+--Now I want to see the stongest Pokemon types in generation 1, since they are the classics! :)
+--BUT only the regular Pokemon, no legendaries
+--AND I want to see the ones with the highest attack! I want an offensive team in battles.
+
+SELECT Type_1 AS Pokemon_Type, 
+
+ROUND(AVG(Total)) AS Total, 
+ROUND(AVG(HP)) AS HP, 
+ROUND(AVG(Attack)) AS ATK, 
+ROUND(AVG(Defense)) AS DEF, 
+ROUND(AVG(Sp_Atk)) AS SP_ATK, 
+ROUND(AVG(Sp_Def)) AS SP_DEF, 
+ROUND(AVG(Speed)) AS Speed 
+
+FROM pokemon 
+WHERE generation = 1
+AND Legendary = "False"
+GROUP BY Type_1
+HAVING AVG(Attack) > 65
+ORDER BY Total DESC;
+
+--Now let's see which pokemon are strong, weak, or okay. This one is funny!
+SELECT Name, Total,
+CASE
+WHEN Total >= 500 THEN "STRONG POKEMON"
+
+WHEN Total >= 300 THEN "OK Pokemon"
+
+ELSE "weak pokemon"
+END as "Pokemon Strength"
+
+FROM pokemon;
+
+--Here are the strongest Pokemon :)
+SELECT Name, Total,
+
+CASE
+WHEN Total >= 500 THEN "STRONG POKEMON"
+
+WHEN Total >= 300 THEN "OK Pokemon"
+
+ELSE "weak pokemon"
+END as "Pokemon Strength"
+
+FROM pokemon
+ORDER BY Total DESC;
+
+--Here are the strongest classic Pokemon, excluding legendaries.
+SELECT Name, Total,
+
+CASE
+WHEN Total >= 500 THEN "STRONG POKEMON"
+
+WHEN Total >= 300 THEN "OK Pokemon"
+
+ELSE "weak pokemon"
+END as "Pokemon Strength"
+
+FROM pokemon
+WHERE Legendary = 'False'
+AND generation < 3 
+ORDER BY Total DESC;
